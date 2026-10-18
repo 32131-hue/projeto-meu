@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Zilly Volkomenn | Fichas de RPG</title>
+
+    <link rel="stylesheet" href="static/style.css">
+</head>
+
+<body>
+
+    <main class="inicio">
+
+        <!-- PÁGINA INICIAL -->
+        <header class="cabecalho">
+            <a href="#" class="logo" id="logo">Zilly Volkomenn</a>
+        </header>
+
+        <section class="conteudo" id="inicio">
+            <h1>Prontos para brilhar</h1>
+            <p>fichas de Ordem Paranormal</p>
+
+            <button class="botao" id="entrar">ENTRAR</button>
+        </section>
+
+        <!-- MENU PRINCIPAL -->
+        <section id="menu" class="menu oculto">
+            <h2>Bem-vindo ao seu novo universo</h2>
+            <p>O que deseja fazer?</p>
+
+            <button class="opcao" id="criarFicha">
+                ✦ Criar uma ficha
+            </button>
+
+            <button class="opcao" id="minhasFichas">
+                ✧ Minhas fichas
+            </button>
+
+            <button class="voltar" id="voltar">
+                Voltar ao início
+            </button>
+        </section>
+
+        <!-- CRIAÇÃO DE FICHA -->
+        <section id="criacao" class="criacao oculto">
+    <h2>Uma nova história começa...</h2>
+    <p>Identidade do personagem</p>
+
+    <form id="formFicha">
+        <label for="nomePersonagem">Nome do personagem *</label>
+        <input id="nomePersonagem" type="text"
+               placeholder="Nome do personagem"
+               maxlength="80" required>
+
+        <label for="jogador">Nome do jogador</label>
+        <input id="jogador" type="text"
+               placeholder="Quem vai interpretar?"
+               maxlength="80">
+
+        <label for="idade">Idade</label>
+        <input id="idade" type="number"
+               placeholder="Idade do personagem"
+               min="1" max="999">
+
+        <label for="ocupacao">Ocupação</label>
+        <input id="ocupacao" type="text"
+               placeholder="Ex.: estudante, médico, agente"
+               maxlength="100">
+               <hr>
+        <h3>Dados da Ordem</h3>
+
+        <label for="classe">Classe</label>
+        <select id="classe">
+            <option value="">Selecione uma classe</option>
+            <option value="Combatente">Combatente</option>
+            <option value="Especialista">Especialista</option>
+            <option value="Ocultista">Ocultista</option>
+            <option value="Personalizada">Personalizada</option>
+        </select>
+
+        <label for="origem">Origem</label>
+        <input id="origem" type="text"
+               placeholder="Ex.: Acadêmico, Operário, Artista"
+               maxlength="100">
+
+        <label for="trilha">Trilha</label>
+        <input id="trilha" type="text"
+               placeholder="Ex.: Aniquilador, Médico de Campo"
+               maxlength="100">
+
+        <label for="patente">Patente</label>
+        <select id="patente">
+            <option value="">Selecione a patente</option>
+            <option value="Recruta">Recruta</option>
+            <option value="Operário">Operário</option>
+            <option value="Agente Especial">Agente Especial</option>
+            <option value="Oficial de Operações">Oficial de Operações</option>
+            <option value="Agente de Elite">Agente de Elite</option>
+            <option value="Personalizada">Personalizada</option>
+        </select>
+
+     
+        <text<label for="periciaEscolhida">Adicionar uma perícia</label>
+
+<div class="seletor-pericias">
+    <select id="periciaEscolhida">
+        <option value="">Escolha uma perícia</option>
+        <option>Acrobacia</option>
+        <option>Adestramento</option>
+        <option>Artes</option>
+        <option>Atletismo</option>
+        <option>Atualidades</option>
+        <option>Ciências</option>
+        <option>Crime</option>
+        <option>Diplomacia</option>
+        <option>Enganação</option>
+        <option>Fortitude</option>
+        <option>Furtividade</option>
+        <option>Iniciativa</option>
+        <option>Intimidação</option>
+        <option>Intuição</option>
+        <option>Investigação</option>
+        <option>Luta</option>
+        <option>Medicina</option>
+        <option>Ocultismo</option>
+        <option>Percepção</option>
+        <option>Pilotagem</option>
+        <option>Pontaria</option>
+        <option>Profissão</option>
+        <option>Reflexos</option>
+        <option>Religião</option>
+        <option>Sobrevivência</option>
+        <option>Tática</option>
+        <option>Tecnologia</option>
+        <option>Vontade</option>
+    </select>
+
+    <label for="grauPericia">Grau de treinamento</label>
+    <select id="grauPericia">
+        <option value="Destreinado">Destreinado</option>
+        <option value="Treinado">Treinado</option>
+        <option value="Veterano">Veterano</option>
+        <option value="Expert">Expert</option>
+    </select>
+
+    <button type="button" class="opcao" id="adicionarPericia">
+        + Adicionar perícia
+    </button>
+</div>
+
+<h3>Perícias escolhidas</h3>
+<p id="mensagemPericias">Nenhuma perícia adicionada ainda.</p>
+<div id="listaPericias"></div>
+
+
+        <label for="conceito">Conceito do personagem</label>
+        <textarea id="conceito"
+                  placeholder="Personalidade, aparência, história..."
+                  maxlength="2000"></textarea>
+                   <hr>
+        <h3>Atributos</h3>
+        <p>Distribua os valores conforme as regras da sua mesa.</p>
+
+        <div class="atributos">
+            <label for="forca">Força</label>
+            <input id="forca" type="number" min="0" max="5" value="1">
+
+            <label for="agilidade">Agilidade</label>
+            <input id="agilidade" type="number" min="0" max="5" value="1">
+
+            <label for="intelecto">Intelecto</label>
+            <input id="intelecto" type="number" min="0" max="5" value="1">
+
+            <label for="presenca">Presença</label>
+            <input id="presenca" type="number" min="0" max="5" value="1">
+
+            <label for="vigor">Vigor</label>
+            <input id="vigor" type="number" min="0" max="5" value="1">
+        </div>
+
+        <hr>
+        <h3>Status de combate</h3>
+        <p>Os valores podem ser ajustados manualmente.</p>
+
+        <label for="pv">Pontos de Vida (PV)</label>
+        <input id="pv" type="number" min="0" value="20">
+
+        <label for="pe">Pontos de Esforço (PE)</label>
+        <input id="pe" type="number" min="0" value="2">
+
+        <label for="san">Sanidade (SAN)</label>
+        <input id="san" type="number" min="0" value="20">
+
+        <button class="opcao" type="submit">
+            Salvar ficha ✨
+        </button>
+    </form>
+
+    <button class="voltar" id="voltarCriacao">
+        Voltar ao menu
+    </button>
+</section>
+
+        <!-- FICHAS SALVAS -->
+        <section id="listaFichas" class="criacao oculto">
+            <h2>Minhas fichas</h2>
+
+            <p id="mensagemFichas">
+                Suas histórias aparecerão aqui.
+            </p>
+
+            <div id="fichasSalvas"></div>
+
+            <button class="voltar" id="voltarFichas">
+                Voltar ao menu
+            </button>
+        </section>
+
+    </main>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        const inicio = document.querySelector("#inicio");
+        const menu = document.querySelector("#menu");
+        const criacao = document.querySelector("#criacao");
+        const lista = document.querySelector("#listaFichas");
+        let periciasSelecionadas = [];
+
+function atualizarListaPericias() {
+    const area = document.querySelector("#listaPericias");
+    const mensagem = document.querySelector("#mensagemPericias");
+
+    area.replaceChildren();
+
+    if (periciasSelecionadas.length === 0) {
+        mensagem.textContent = "Nenhuma perícia adicionada ainda.";
+        return;
+    }
+
+    mensagem.textContent = "Perícias do personagem:";
+
+    periciasSelecionadas.forEach(function (pericia, indice) {
+        const linha = document.createElement("div");
+        const texto = document.createElement("span");
+        const grau = document.createElement("select");
+        const remover = document.createElement("button");
+
+        texto.textContent = pericia.nome + ": ";
+
+        ["Destreinado", "Treinado", "Veterano", "Expert"].forEach(
+            function (opcao) {
+                const item = document.createElement("option");
+                item.value = opcao;
+                item.textContent = opcao;
+                grau.appendChild(item);
+            }
+        );
+
+        grau.value = pericia.grau;
+        grau.addEventListener("change", function () {
+            periciasSelecionadas[indice].grau = grau.value;
+        });
+
+        remover.type = "button";
+        remover.textContent = "Remover";
+        remover.className = "voltar";
+
+        remover.addEventListener("click", function () {
+            periciasSelecionadas.splice(indice, 1);
+            atualizarListaPericias();
+        });
+
+        linha.appendChild(texto);
+        linha.appendChild(grau);
+        linha.appendChild(remover);
+        area.appendChild(linha);
+    });
+}
+
+document.querySelector("#adicionarPericia").addEventListener("click", function () {
+    const seletor = document.querySelector("#periciaEscolhida");
+    const grau = document.querySelector("#grauPericia");
+    const nome = seletor.value;
+
+    if (!nome) {
+        alert("Escolha uma perícia primeiro!");
+        return;
+    }
+
+    if (periciasSelecionadas.some(function (item) {
+        return item.nome === nome;
+    })) {
+        alert("Essa perícia já foi adicionada!");
+        return;
+    }
+
+    periciasSelecionadas.push({
+        nome: nome,
+        grau: grau.value
+    });
+
+    atualizarListaPericias();
+    seletor.value = "";
+});
+
+function limparPericias() {
+    periciasSelecionadas = [];
+    atualizarListaPericias();
+    document.querySelector("#periciaEscolhida").value = "";
+    document.querySelector("#grauPericia").value = "Destreinado";
+}
+
+        const telas = [inicio, menu, criacao, lista];
+
+        function mostrarTela(tela) {
+            telas.forEach(function (elemento) {
+                elemento.classList.add("oculto");
+            });
+
+            tela.classList.remove("oculto");
+        }
+
+        // Entrar no site
+        document.querySelector("#entrar").addEventListener("click", function () {
+            mostrarTela(menu);
+        });
+
+        // Voltar à página inicial
+        document.querySelector("#voltar").addEventListener("click", function () {
+            mostrarTela(inicio);
+        });
+
+        document.querySelector("#logo").addEventListener("click", function (evento) {
+            evento.preventDefault();
+            mostrarTela(inicio);
+        });
+
+        // Abrir a criação de ficha
+      document.querySelector("#criarFicha").addEventListener("click", function () {
+    document.querySelector("#formFicha").reset();
+    limparPericias();
+    mostrarTela(criacao);
+        });
+
+        // Voltar ao menu pela tela de criação
+        document.querySelector("#voltarCriacao").addEventListener("click", function () {
+            mostrarTela(menu);
+        });
+
+        // Abrir a lista de fichas
+        document.querySelector("#minhasFichas").addEventListener("click", function () {
+            atualizarFichas();
+            mostrarTela(lista);
+        });
+
+        // Voltar ao menu pela lista
+        document.querySelector("#voltarFichas").addEventListener("click", function () {
+            mostrarTela(menu);
+        });
+
+        // Ler fichas salvas no navegador
+        function lerFichas() {
+            try {
+                const dados = JSON.parse(
+                    localStorage.getItem("zillyFichas") || "[]"
+                );
+
+                return Array.isArray(dados) ? dados : [];
+            } catch (erro) {
+                return [];
+            }
+        }
+
+        // Salvar uma nova ficha
+       document.querySelector("#formFicha").addEventListener("submit", function (evento) {
+    evento.preventDefault();
+
+    const ficha = {
+        id: Date.now(),
+        nome: document.querySelector("#nomePersonagem").value.trim(),
+        jogador: document.querySelector("#jogador").value.trim(),
+        idade: document.querySelector("#idade").value,
+        ocupacao: document.querySelector("#ocupacao").value.trim(),
+        classe: document.querySelector("#classe").value,
+        origem: document.querySelector("#origem").value.trim(),
+        trilha: document.querySelector("#trilha").value.trim(),
+        patente: document.querySelector("#patente").value,
+      pericias: periciasSelecionadas.map(function (pericia) {
+    return {
+        nome: pericia.nome,
+        grau: pericia.grau
+    };
+}),
+        equipamentos: document.querySelector("#equipamentos").value.trim(),
+        conceito: document.querySelector("#conceito").value.trim(),
+        forca: Number(document.querySelector("#forca").value),
+        agilidade: Number(document.querySelector("#agilidade").value),
+        intelecto: Number(document.querySelector("#intelecto").value),
+        presenca: Number(document.querySelector("#presenca").value),
+        vigor: Number(document.querySelector("#vigor").value),
+        pv: Number(document.querySelector("#pv").value),
+        pe: Number(document.querySelector("#pe").value),
+        san: Number(document.querySelector("#san").value)
+    };
+
+    if (!ficha.nome) {
+        alert("Digite o nome do personagem!");
+        return;
+    }
+
+    const fichas = lerFichas();
+    fichas.push(ficha);
+
+    try {
+        localStorage.setItem("zillyFichas", JSON.stringify(fichas));
+    } catch (erro) {
+        alert("Não foi possível salvar a ficha.");
+        return;
+    }
+
+    atualizarFichas();
+    mostrarTela(lista);
+    document.querySelector("#formFicha").reset();
+
+    alert("Ficha salva com sucesso! ✨");
+});
+        
+
+         // Mostrar fichas salvas
+        function atualizarFichas() {
+            const fichas = lerFichas();
+            const area = document.querySelector("#fichasSalvas");
+            const mensagem = document.querySelector("#mensagemFichas");
+
+            area.replaceChildren();
+
+            if (fichas.length === 0) {
+                mensagem.textContent = "Você ainda não criou nenhuma ficha.";
+                return;
+            }
+
+            mensagem.textContent = "Suas fichas de personagem:";
+
+            fichas.forEach(function (ficha) {
+                const cartao = document.createElement("article");
+                const titulo = document.createElement("h3");
+                const jogador = document.createElement("p");
+                const conceito = document.createElement("p");
+                const atributos = document.createElement("p");
+                const status = document.createElement("p");
+                const classeOrigem = document.createElement("p");
+                const trilhaPatente = document.createElement("p");
+                const pericias = document.createElement("p");
+                const equipamentos = document.createElement("p");
+                const excluir = document.createElement("button");
+
+                titulo.textContent = ficha.nome;
+
+                jogador.textContent =
+                    "Jogador: " + (ficha.jogador || "Não informado") +
+                    " | Idade: " + (ficha.idade || "Não informada") +
+                    " | Ocupação: " + (ficha.ocupacao || "Não informada");
+
+                conceito.textContent =
+                    "Conceito: " +
+                    (ficha.conceito || "Nenhum conceito informado.");
+
+                atributos.textContent =
+                    "FOR: " + (ficha.forca ?? 1) +
+                    " | AGI: " + (ficha.agilidade ?? 1) +
+                    " | INT: " + (ficha.intelecto ?? 1) +
+                    " | PRE: " + (ficha.presenca ?? 1) +
+                    " | VIG: " + (ficha.vigor ?? 1);
+
+                status.textContent =
+                    "PV: " + (ficha.pv ?? 20) +
+                    " | PE: " + (ficha.pe ?? 2) +
+                    " | SAN: " + (ficha.san ?? 20);
+                      classeOrigem.textContent =
+                    "Classe: " + (ficha.classe || "Não informada") +
+                    " | Origem: " + (ficha.origem || "Não informada");
+
+                trilhaPatente.textContent =
+                    "Trilha: " + (ficha.trilha || "Não informada") +
+                    " | Patente: " + (ficha.patente || "Não informada");
+
+                pericias.textContent = "Perícias: ";
+
+if (Array.isArray(ficha.pericias) && ficha.pericias.length > 0) {
+    pericias.textContent += ficha.pericias.map(function (item) {
+        return item.nome + " (" + item.grau + ")";
+    }).join(", ");
+} else if (typeof ficha.pericias === "string" && ficha.pericias.trim()) {
+    pericias.textContent += ficha.pericias;
+} else {
+    pericias.textContent += "Nenhuma informada";
+}
+                    "Perícias: " + (ficha.pericias || "Nenhuma informada");
+
+                equipamentos.textContent =
+                    "Equipamentos: " +
+                    (ficha.equipamentos || "Nenhum informado");
+
+                excluir.textContent = "Excluir ficha";
+                excluir.className = "voltar";
+
+                cartao.appendChild(titulo);
+                cartao.appendChild(jogador);
+                cartao.appendChild(conceito);
+                cartao.appendChild(atributos);
+                 cartao.appendChild(status);
+                cartao.appendChild(classeOrigem);
+                cartao.appendChild(trilhaPatente);
+                cartao.appendChild(pericias);
+                cartao.appendChild(equipamentos);
+                cartao.appendChild(excluir);
+
+                excluir.addEventListener("click", function () {
+                    const restantes = lerFichas().filter(function (item) {
+                        return item.id !== ficha.id;
+                    });
+
+                    try {
+                        localStorage.setItem(
+                            "zillyFichas",
+                            JSON.stringify(restantes)
+                        );
+                        atualizarFichas();
+                    } catch (erro) {
+                        alert("Não foi possível atualizar as fichas.");
+                    }
+                });
+
+                area.appendChild(cartao);
+            });
+        }
+    </script>
+
+
+</body>
+</html>

@@ -1,0 +1,258 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Georgia, "Times New Roman", serif;
+    background: #dcecff;
+}
+
+/* Página inicial */
+.inicio {
+    position: relative;
+    min-height: 100vh;
+    width: 100%;
+    overflow: hidden;
+
+    background-image:
+        linear-gradient(
+            to bottom,
+            rgba(25, 65, 120, 0.12),
+            rgba(255, 238, 225, 0.32)
+        ),
+        url("fundo.jpg.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Nome no topo */
+.cabecalho {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.logo {
+    color: white;
+    text-decoration: none;
+    font-size: clamp(22px, 2.2vw, 32px);
+    text-shadow: 0 1px 8px rgba(0, 0, 0, 0.12);
+}
+
+/* Título e botão */
+.conteudo {
+    position: absolute;
+    top: 42%;
+    left: 0;
+    width: 100%;
+    padding: 0 16px;
+    text-align: center;
+    transform: translateY(-10%);
+}
+
+.conteudo h1 {
+    color: #bd8057;
+    font-size: clamp(42px, 7.2vw, 110px);
+    font-weight: normal;
+    line-height: 1.12;
+}
+
+.conteudo p {
+    color: #bd8057;
+    font-size: clamp(18px, 2.1vw, 30px);
+    margin-top: 4px;
+    margin-bottom: 90px;
+}
+
+.botao {
+    display: inline-block;
+    padding: 8px 20px 12px;
+    color: white;
+    background: rgba(177, 111, 72, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 18px;
+    text-decoration: none;
+    font-size: clamp(28px, 3vw, 44px);
+    transition: background 0.25s, transform 0.25s;
+}
+
+.botao:hover {
+    background: rgba(151, 87, 51, 0.82);
+    transform: scale(1.05);
+}
+
+/* Texto discreto no rodapé */
+.rodape {
+    position: absolute;
+    bottom: 18px;
+    color: white;
+    font-size: 13px;
+    text-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+}
+
+/* Ajustes para celular */
+@media (max-width: 600px) {
+    .cabecalho {
+        top: 6%;
+    }
+
+    .conteudo {
+        top: 38%;
+    }
+
+    .conteudo p {
+        margin-bottom: 65px;
+    }
+}
+.oculto {
+    display: none !important;
+}
+
+.menu,
+.criacao {
+    position: relative;
+    z-index: 2;
+    width: min(90%, 650px);
+    margin: auto;
+    padding: 35px;
+    text-align: center;
+    color: #80583f;
+    background: rgba(255, 247, 237, 0.88);
+    border: 2px solid rgba(190, 143, 100, 0.8);
+    border-radius: 22px;
+    box-shadow: 0 10px 40px rgba(48, 63, 96, 0.18);
+    backdrop-filter: blur(8px);
+}
+
+.menu h2,
+.criacao h2 {
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: normal;
+    margin-bottom: 12px;
+}
+
+.menu p,
+.criacao p {
+    margin-bottom: 25px;
+    font-size: 18px;
+}
+
+.opcao,
+.voltar {
+    display: block;
+    width: 100%;
+    margin: 12px auto;
+    padding: 14px;
+    font-family: Georgia, serif;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.opcao {
+    color: white;
+    background: #bd8967;
+    border: 1px solid #a87352;
+}
+
+.opcao:hover {
+    background: #9f6b4d;
+    transform: translateY(-2px);
+}
+
+.voltar {
+    color: #80583f;
+    background: transparent;
+    border: 1px solid #bd8967;
+}
+
+.voltar:hover {
+    background: rgba(189, 137, 103, 0.12);
+}
+
+.criacao label {
+    display: block;
+    text-align: left;
+    margin: 18px 0 7px;
+}
+
+.criacao input,
+.criacao textarea {
+    width: 100%;
+    padding: 12px;
+    font-family: Georgia, serif;
+    font-size: 16px;
+    color: #543b2b;
+    background: #fffdf9;
+    border: 1px solid #c9a68d;
+    border-radius: 8px;
+}
+
+.criacao textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+/* Caixas de seleção — Zilly Volkomenn */
+select {
+    width: 100%;
+    padding: 14px 16px;
+    margin: 8px 0 18px;
+
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: 500;
+    color: #40345F;
+
+    background-color: #FFF9EC;
+    border: 1.5px solid #D4AF62;
+    border-radius: 12px;
+
+    outline: none;
+    cursor: pointer;
+
+    box-shadow: 0 2px 8px rgba(164, 125, 48, 0.10);
+
+    transition: border-color 0.25s ease,
+                box-shadow 0.25s ease,
+                background-color 0.25s ease;
+}
+
+/* Brilho dourado ao passar o mouse */
+select:hover {
+    background-color: #FFFFFF;
+    border-color: #B8913F;
+    box-shadow: 0 3px 12px rgba(164, 125, 48, 0.18);
+}
+
+/* Destaque quando selecionado */
+select:focus {
+    background-color: #FFFFFF;
+    border-color: #B8913F;
+
+    box-shadow:
+        0 0 0 3px rgba(212, 175, 98, 0.20),
+        0 3px 14px rgba(164, 125, 48, 0.15);
+}
+
+/* Opções da lista */
+select option {
+    color: #40345F;
+    background-color: #FFF9EC;
+}
