@@ -806,3 +806,87 @@ select option {
         transition: none;
     }
 }
+  /*ILLY VOLKOMENN — AJUSTES PARA CELULAR */
+
+@media (max-width: 600px) {
+    body {
+        overflow-x: hidden;
+    }
+}
+
+    .menu,
+    .criacao {
+        width: 94%;
+        max-width: 100%;
+        padding: 18px;
+        margin: 16px auto;
+    }
+
+    #criacao {
+        width: 94%;
+        padding: 18px;
+    }
+
+    .layout-form-ficha {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 20px;
+    }
+
+    .coluna-retrato,
+    .coluna-campos {
+        width: 100%;
+        min-width: 0;
+        padding: 16px;
+    }
+
+    .coluna-retrato .area-upload {
+        min-height: 240px;
+    }
+
+    .coluna-campos {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+    }
+
+    .criacao input,
+    .criacao select,
+    .criacao textarea,
+    .coluna-campos input,
+    .coluna-campos select,
+    .coluna-campos textarea {
+        width: 100%;
+        min-width: 0;
+        font-size: 16px;
+    }
+
+    .opcao,
+    .voltar {
+        min-height: 44px;
+    }
+
+    #fichasSalvas {
+        min-width: 0;
+    }
+
+    #fichasSalvas .layout-ficha-salva {
+        min-width: 0;
+        padding: 12px;
+    }
+
+    #fichasSalvas .painel-foto-salva,
+    #fichasSalvas .painel-info-salva {
+        min-width: 0;
+        padding: 14px;
+    }
+
+    #fichasSalvas .painel-foto-salva .ficha-foto {
+        max-width: 100%;
+        max-height: 320px;
+    }
+
+    .conteudo-modal-ficha {
+        width: 100%;
+        max-height: 90dvh;
+        padding: 16px;
+    }
