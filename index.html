@@ -49,6 +49,26 @@
     <p>Identidade do personagem</p>
 
     <form id="formFicha">
+        <div class="layout-form-ficha">
+    <aside class="coluna-retrato">
+         <div class="area-upload" id="areaUpload" tabindex="0" role="button"
+     aria-label="Escolher ou arrastar a imagem do personagem">
+    <input id="fotoPersonagem" type="file" accept="image/*" hidden>
+
+    <div id="instrucaoFoto">
+        <span class="simbolo-upload">✧</span>
+        <p><strong>Retrato do personagem</strong></p>
+        <p>Arraste sua imagem até aqui</p>
+        <p class="texto-pequeno">ou clique para escolher uma imagem</p>
+    </div>
+
+    <img id="previaFoto" alt="Prévia do personagem" hidden>
+    <button type="button" id="removerFoto" hidden>
+        Remover imagem
+    </button>
+</div>
+        </aside>
+    <div class="coluna-campos">
         <label for="nomePersonagem">Nome do personagem *</label>
         <input id="nomePersonagem" type="text"
                placeholder="Nome do personagem"
@@ -102,7 +122,7 @@
         </select>
 
      
-        <text<label for="periciaEscolhida">Adicionar uma perícia</label>
+       <label for="periciaEscolhida">Adicionar uma perícia</label>
 
 <div class="seletor-pericias">
     <select id="periciaEscolhida">
@@ -196,6 +216,8 @@
         <button class="opcao" type="submit">
             Salvar ficha ✨
         </button>
+        </div>
+        </div>
     </form>
 
     <button class="voltar" id="voltarCriacao">
@@ -227,6 +249,104 @@
         const criacao = document.querySelector("#criacao");
         const lista = document.querySelector("#listaFichas");
         let periciasSelecionadas = [];
+        let fotoPersonagemBase64 = "";
+
+const areaUpload = document.querySelector("#areaUpload");
+const inputFoto = document.querySelector("#fotoPersonagem");
+const previaFoto = document.querySelector("#previaFoto");
+const instrucaoFoto = document.querySelector("#instrucaoFoto");
+const botaoRemoverFoto = document.querySelector("#removerFoto");
+
+function carregarFoto(arquivo) {
+    if (!arquivo) return;
+
+    if (!arquivo.type.startsWith("image/")) {
+        alert("Escolha um arquivo de imagem.");
+        return;
+    }
+
+    // Evita ocupar muito espaço no armazenamento das fichas.
+    if (arquivo.size > 1024 * 1024) {
+        alert("Essa imagem é muito grande. Escolha uma imagem de até 1 MB.");
+        inputFoto.value = "";
+        return;
+    }
+
+    const leitor = new FileReader();
+
+    leitor.onload = function () {
+        fotoPersonagemBase64 = leitor.result;
+
+        previaFoto.src = fotoPersonagemBase64;
+        previaFoto.hidden = false;
+        instrucaoFoto.hidden = true;
+        botaoRemoverFoto.hidden = false;
+    };
+
+    leitor.onerror = function () {
+        alert("Não foi possível carregar essa imagem.");
+    };
+
+    leitor.readAsDataURL(arquivo);
+}
+
+// Clicar na área abre o seletor de imagens.
+areaUpload.addEventListener("click", function (evento) {
+    if (evento.target.closest("#removerFoto")) return;
+    inputFoto.click();
+});
+
+// Também permite selecionar usando Enter ou Espaço.
+areaUpload.addEventListener("keydown", function (evento) {
+    if (
+        evento.target === areaUpload &&
+        (evento.key === "Enter" || evento.key === " ")
+    ) {
+        evento.preventDefault();
+        inputFoto.click();
+    }
+});
+
+// Seleção pelo computador.
+inputFoto.addEventListener("change", function () {
+    carregarFoto(inputFoto.files[0]);
+});
+
+// Destaca a área enquanto a imagem está sendo arrastada.
+areaUpload.addEventListener("dragover", function (evento) {
+    evento.preventDefault();
+    areaUpload.classList.add("em-destaque");
+});
+
+areaUpload.addEventListener("dragleave", function (evento) {
+    if (!areaUpload.contains(evento.relatedTarget)) {
+        areaUpload.classList.remove("em-destaque");
+    }
+});
+
+// Recebe a imagem solta dentro da moldura.
+areaUpload.addEventListener("drop", function (evento) {
+    evento.preventDefault();
+    areaUpload.classList.remove("em-destaque");
+
+    const arquivo = evento.dataTransfer.files[0];
+    carregarFoto(arquivo);
+});
+
+// Remove a imagem escolhida.
+function limparFoto() {
+    fotoPersonagemBase64 = "";
+    inputFoto.value = "";
+    previaFoto.removeAttribute("src");
+    previaFoto.hidden = true;
+    instrucaoFoto.hidden = false;
+    botaoRemoverFoto.hidden = true;
+}
+
+botaoRemoverFoto.addEventListener("click", function (evento) {
+    evento.stopPropagation();
+    limparFoto();
+});
 
 function atualizarListaPericias() {
     const area = document.querySelector("#listaPericias");
@@ -341,6 +461,7 @@ function limparPericias() {
       document.querySelector("#criarFicha").addEventListener("click", function () {
     document.querySelector("#formFicha").reset();
     limparPericias();
+     limparFoto();
     mostrarTela(criacao);
         });
 
@@ -387,13 +508,14 @@ function limparPericias() {
         origem: document.querySelector("#origem").value.trim(),
         trilha: document.querySelector("#trilha").value.trim(),
         patente: document.querySelector("#patente").value,
+        foto: fotoPersonagemBase64,
       pericias: periciasSelecionadas.map(function (pericia) {
     return {
         nome: pericia.nome,
         grau: pericia.grau
     };
 }),
-        equipamentos: document.querySelector("#equipamentos").value.trim(),
+        equipamentos: document.querySelector("#equipamentos")?.value.trim() || "",
         conceito: document.querySelector("#conceito").value.trim(),
         forca: Number(document.querySelector("#forca").value),
         agilidade: Number(document.querySelector("#agilidade").value),
@@ -444,7 +566,60 @@ function limparPericias() {
             mensagem.textContent = "Suas fichas de personagem:";
 
             fichas.forEach(function (ficha) {
-                const cartao = document.createElement("article");
+              const cartao = document.createElement("article");
+cartao.className = "ficha-cartao ficha-recolhivel";
+
+const cabecalho = document.createElement("button");
+cabecalho.type = "button";
+cabecalho.className = "cabecalho-ficha";
+cabecalho.setAttribute("aria-expanded", "false");
+
+const miniatura = document.createElement("div");
+miniatura.className = "miniatura-ficha";
+
+const nomeCabecalho = document.createElement("span");
+nomeCabecalho.className = "nome-cabecalho";
+nomeCabecalho.textContent = ficha.nome || "Personagem sem nome";
+
+const seta = document.createElement("span");
+seta.className = "seta-ficha";
+seta.textContent = "⌄";
+seta.setAttribute("aria-hidden", "true");
+
+if (ficha.foto) {
+    const fotoPequena = document.createElement("img");
+    fotoPequena.src = ficha.foto;
+    fotoPequena.alt = "";
+    miniatura.appendChild(fotoPequena);
+} else {
+    miniatura.textContent = "✧";
+}
+
+cabecalho.appendChild(miniatura);
+cabecalho.appendChild(nomeCabecalho);
+cabecalho.appendChild(seta);
+
+const corpoFicha = document.createElement("div");
+corpoFicha.className = "corpo-ficha";
+
+const ladoFoto = document.createElement("div");
+ladoFoto.className = "ficha-lado-foto";
+
+if (ficha.foto) {
+    const imagem = document.createElement("img");
+    imagem.src = ficha.foto;
+    imagem.alt = "Retrato de " + ficha.nome;
+    imagem.className = "ficha-foto";
+    ladoFoto.appendChild(imagem);
+} else {
+    const semFoto = document.createElement("div");
+    semFoto.className = "ficha-sem-foto";
+    semFoto.textContent = "Retrato não adicionado";
+    ladoFoto.appendChild(semFoto);
+}
+
+const informacoes = document.createElement("div");
+informacoes.className = "ficha-informacoes";
                 const titulo = document.createElement("h3");
                 const jogador = document.createElement("p");
                 const conceito = document.createElement("p");
@@ -455,6 +630,10 @@ function limparPericias() {
                 const pericias = document.createElement("p");
                 const equipamentos = document.createElement("p");
                 const excluir = document.createElement("button");
+                const visualizar = document.createElement("button");
+visualizar.textContent = "Ver ficha completa ✨";
+visualizar.className = "opcao";
+visualizar.type = "button";
 
                 titulo.textContent = ficha.nome;
 
@@ -497,7 +676,6 @@ if (Array.isArray(ficha.pericias) && ficha.pericias.length > 0) {
 } else {
     pericias.textContent += "Nenhuma informada";
 }
-                    "Perícias: " + (ficha.pericias || "Nenhuma informada");
 
                 equipamentos.textContent =
                     "Equipamentos: " +
@@ -505,17 +683,136 @@ if (Array.isArray(ficha.pericias) && ficha.pericias.length > 0) {
 
                 excluir.textContent = "Excluir ficha";
                 excluir.className = "voltar";
+                informacoes.appendChild(titulo);
+informacoes.appendChild(jogador);
+informacoes.appendChild(conceito);
+informacoes.appendChild(atributos);
+informacoes.appendChild(status);
+informacoes.appendChild(classeOrigem);
+informacoes.appendChild(trilhaPatente);
+informacoes.appendChild(pericias);
+informacoes.appendChild(equipamentos);
+informacoes.appendChild(visualizar);
+informacoes.appendChild(excluir);
 
-                cartao.appendChild(titulo);
-                cartao.appendChild(jogador);
-                cartao.appendChild(conceito);
-                cartao.appendChild(atributos);
-                 cartao.appendChild(status);
-                cartao.appendChild(classeOrigem);
-                cartao.appendChild(trilhaPatente);
-                cartao.appendChild(pericias);
-                cartao.appendChild(equipamentos);
-                cartao.appendChild(excluir);
+const layoutFichaSalva = document.createElement("div");
+layoutFichaSalva.className = "layout-ficha-salva";
+
+const painelFotoSalva = document.createElement("div");
+painelFotoSalva.className = "painel-foto-salva";
+painelFotoSalva.appendChild(ladoFoto);
+
+const painelInfoSalva = document.createElement("div");
+painelInfoSalva.className = "painel-info-salva";
+painelInfoSalva.appendChild(informacoes);
+
+layoutFichaSalva.appendChild(painelFotoSalva);
+layoutFichaSalva.appendChild(painelInfoSalva);
+
+corpoFicha.appendChild(layoutFichaSalva);
+
+cartao.appendChild(cabecalho);
+cartao.appendChild(corpoFicha);
+
+cabecalho.addEventListener("click", function () {
+    const vaiAbrir = !cartao.classList.contains("ficha-aberta");
+
+    cartao.classList.toggle("ficha-aberta", vaiAbrir);
+
+    cabecalho.setAttribute("aria-expanded", String(vaiAbrir));
+    seta.textContent = vaiAbrir ? "⌃" : "⌄";
+});
+visualizar.addEventListener("click", function () {
+    const modal = document.createElement("div");
+    modal.className = "modal-ficha";
+
+    const conteudo = document.createElement("div");
+    conteudo.className = "conteudo-modal-ficha";
+
+    const fechar = document.createElement("button");
+    fechar.type = "button";
+    fechar.className = "voltar";
+    fechar.textContent = "Fechar ficha ✕";
+
+    const tituloCompleto = document.createElement("h2");
+    tituloCompleto.textContent = ficha.nome || "Personagem sem nome";
+
+    conteudo.appendChild(fechar);
+    conteudo.appendChild(tituloCompleto);
+
+    if (ficha.foto) {
+        const retrato = document.createElement("img");
+        retrato.src = ficha.foto;
+        retrato.alt = "Retrato de " + ficha.nome;
+        retrato.className = "retrato-modal-ficha";
+        conteudo.appendChild(retrato);
+    }
+
+    const dados = [
+        ["Jogador", ficha.jogador],
+        ["Idade", ficha.idade],
+        ["Ocupação", ficha.ocupacao],
+        ["Conceito", ficha.conceito],
+        ["Classe", ficha.classe],
+        ["Origem", ficha.origem],
+        ["Trilha", ficha.trilha],
+        ["Patente", ficha.patente],
+        ["Força", ficha.forca ?? 1],
+        ["Agilidade", ficha.agilidade ?? 1],
+        ["Intelecto", ficha.intelecto ?? 1],
+        ["Presença", ficha.presenca ?? 1],
+        ["Vigor", ficha.vigor ?? 1],
+        ["PV", ficha.pv ?? 20],
+        ["PE", ficha.pe ?? 2],
+        ["SAN", ficha.san ?? 20],
+        ["Equipamentos", ficha.equipamentos || "Nenhum informado"]
+    ];
+
+    dados.forEach(function (item) {
+        const linha = document.createElement("p");
+        linha.textContent = item[0] + ": " + (item[1] || "Não informado");
+        conteudo.appendChild(linha);
+    });
+
+    const tituloPericias = document.createElement("h3");
+    tituloPericias.textContent = "Perícias";
+    conteudo.appendChild(tituloPericias);
+
+    const listaPericias = document.createElement("p");
+
+    if (Array.isArray(ficha.pericias) && ficha.pericias.length) {
+        listaPericias.textContent = ficha.pericias.map(function (item) {
+            return item.nome + " (" + item.grau + ")";
+        }).join(", ");
+    } else if (typeof ficha.pericias === "string" && ficha.pericias.trim()) {
+        listaPericias.textContent = ficha.pericias;
+    } else {
+        listaPericias.textContent = "Nenhuma perícia informada";
+    }
+
+    conteudo.appendChild(listaPericias);
+    modal.appendChild(conteudo);
+    document.body.appendChild(modal);
+
+    function fecharModal() {
+        modal.remove();
+    }
+
+    fechar.addEventListener("click", fecharModal);
+
+    modal.addEventListener("click", function (evento) {
+        if (evento.target === modal) {
+            fecharModal();
+        }
+    });
+
+    document.addEventListener("keydown", function teclaEscape(evento) {
+        if (evento.key === "Escape") {
+            fecharModal();
+            document.removeEventListener("keydown", teclaEscape);
+        }
+    });
+});
 
                 excluir.addEventListener("click", function () {
                     const restantes = lerFichas().filter(function (item) {
